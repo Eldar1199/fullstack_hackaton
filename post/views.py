@@ -34,5 +34,3 @@ class PostView(PermissionMixin,viewsets.ModelViewSet):
             return PostListSerializer
         else:
             return self.serializer_class
-        
-

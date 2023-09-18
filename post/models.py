@@ -15,5 +15,3 @@ class Post(models.Model):
     actuality = models.BooleanField(default=False)
     created_ad = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-

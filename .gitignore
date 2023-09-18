@@ -1,8 +1,7 @@
 venv
 .env
-account
-post
 profilee
+post
 # Django #
 *.log
 *.pot

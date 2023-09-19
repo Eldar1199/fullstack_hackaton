@@ -6,8 +6,8 @@ from .views import ProfileUserView, ProfileReqruiterView
 router = DefaultRouter()
 
 
-router.register('profile', ProfileUserView)
-router.register('profiles', ProfileReqruiterView)
+router.register('user', ProfileUserView)
+router.register('req', ProfileReqruiterView)
 
 urlpatterns = [
     path('', include(router.urls)),

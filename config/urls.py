@@ -37,6 +37,7 @@ urlpatterns = [
     path('docs/', schema_view.with_ui('swagger')),
     path('api/v1/account/', include('account.urls')),
     path('api/v1/profile/', include('profilee.urls')),
+    path('api/v1/', include('post.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -10,7 +10,7 @@ class ProfileUserSerializer(ModelSerializer):
         model = ProfileUser
         fields = '__all__'
 
-    
+
 
 class ProfileReqruiterSerializer(ModelSerializer):
 

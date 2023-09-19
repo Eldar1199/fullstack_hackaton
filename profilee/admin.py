@@ -1,3 +1,5 @@
 from django.contrib import admin
+from .models import ProfileReqruiter, ProfileUser
 
-# Register your models here.
+admin.site.register(ProfileUser)
+admin.site.register(ProfileReqruiter)

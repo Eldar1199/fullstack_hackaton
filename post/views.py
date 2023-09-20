@@ -5,7 +5,12 @@ from .models import Post
 from .serializers import PostListSerializer, PostDetailSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework_simplejwt.authentication import JWTAuthentication
-
+from review.models import Like
+from rest_framework.decorators import action
+from review.serializers import LikeSerializer
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from django.shortcuts import get_object_or_404
 
 
 class PermissionMixin:
@@ -25,12 +30,42 @@ class PostView(PermissionMixin,viewsets.ModelViewSet):
     serializer_class = PostDetailSerializer
     authentication_classes = [JWTAuthentication]
     filter_backends = [DjangoFilterBackend,filters.SearchFilter]
-    # filterset_fields = ['category', 'in_stock']
+    # filterset_fields = []
     search_fields = ['vacancy','salary']
+
+    def retrieve(self, request, pk):
+        post = get_object_or_404(Post, pk=pk)
+        post.views += 1
+        post.save()
+        
+        serializer = self.get_serializer_class()(post)
+        return Response(serializer.data, status=200)
 
 
     def get_serializer_class(self):
         if self.action == 'list':
-            return PostListSerializer
-        else:
-            return self.serializer_class
+            self.serializer_class = PostListSerializer
+        return super().get_serializer_class()
+        
+
+
+    @action(methods=['POST'], detail=True,permission_classes=[IsAuthenticated])
+    def like(self, request, pk=None):
+        post = self.get_object()
+        user = request.user
+        serializer = LikeSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            try:
+                like = Like.objects.get(post=post, author=user)
+                like.delete()
+                message = 'unlike'
+            except Like.DoesNotExist:
+                Like.objects.create(post=post, author=user)
+                message = 'liked'
+            return Response(message, status=201)
+        
+
+
+
+
+

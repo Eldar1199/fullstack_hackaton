@@ -31,7 +31,7 @@ DEBUG = config('DEBUG')
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
-
+AUTH_USER_MODEL = 'account.User'
 
 
 INSTALLED_APPS = [
@@ -48,9 +48,10 @@ INSTALLED_APPS = [
     'django_filters',
     'corsheaders',
     #apps
-    # 'account',
+    'account',
     'post',
-    # 'profilee',
+    'profilee',
+    'review',
 
 
 ]

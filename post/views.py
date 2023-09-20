@@ -1,6 +1,6 @@
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework import viewsets, filters
-from .permissions import IsAuthor
+from .permissions import IsAuthor, IsReqruiter
 from .models import Post
 from .serializers import PostListSerializer, PostDetailSerializer
 from django_filters.rest_framework import DjangoFilterBackend
@@ -16,7 +16,7 @@ from django.shortcuts import get_object_or_404
 class PermissionMixin:
     def get_permissions(self):
         if self.action in ('create'):
-            permissions = [IsAuthenticated]
+            permissions = [IsAuthenticated, IsReqruiter]
         elif self.action in ('update','partial_update','destroy'):
             permissions = [IsAuthor]
         else:

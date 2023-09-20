@@ -32,7 +32,7 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 AUTH_USER_MODEL = 'account.User'
 
-AUTH_USER_MODEL = 'account.User'
+
 
 
 INSTALLED_APPS = [
@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     #apps
     'account',
     'post',
-    'profilee',
+    # 'profilee',
     'review',
 
 
@@ -173,7 +173,8 @@ REST_FRAMEWORK = {
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=6000),
-    'REFRESH_TOKEN_LIFE TIME': timedelta(days=5)
+    'REFRESH_TOKEN_LIFE TIME': timedelta(days=5),
+    "USER_ID_FIELD": "email"
 }
 
 

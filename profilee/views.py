@@ -1,6 +1,6 @@
-from .models import ProfileReqruiter, ProfileUser
+from .models import ProfileRecruiter, ProfileUser
 from rest_framework import viewsets
-from .serializers import ProfileReqruiterSerializer, ProfileUserSerializer
+from .serializers import ProfileRecruiterSerializer, ProfileUserSerializer
 # from .permissions import IsPatchRequest
 from rest_framework.permissions import IsAuthenticated
 
@@ -14,7 +14,7 @@ class ProfileUserView(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
 
-class ProfileReqruiterView(viewsets.ModelViewSet):
-    queryset = ProfileReqruiter.objects.all()
-    serializer_class = ProfileReqruiterSerializer
+class ProfileRecruiterView(viewsets.ModelViewSet):
+    queryset = ProfileRecruiter.objects.all()
+    serializer_class = ProfileRecruiterSerializer
     permission_classes = [IsAuthenticated]

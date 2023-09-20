@@ -18,7 +18,7 @@ class ProfileUser(models.Model):
     about_user = models.TextField(blank=True, verbose_name='О человеке')
 
 
-class ProfileReqruiter(models.Model):
+class ProfileRecruiter(models.Model):
     user = models.OneToOneField(User, 
                                 on_delete=models.CASCADE, 
                                 related_name='profiles_reqruiter', 

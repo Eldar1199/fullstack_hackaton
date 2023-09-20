@@ -30,7 +30,7 @@ DEBUG = config('DEBUG')
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
-
+AUTH_USER_MODEL = 'account.User'
 
 
 
@@ -48,9 +48,9 @@ INSTALLED_APPS = [
     'django_filters',
     'corsheaders',
     #apps
-    # 'account',
+    'account',
     'post',
-    # 'profilee',
+    'profilee',
 
 
 ]
@@ -186,14 +186,14 @@ SWAGGER_SETTINGS = {
     }
 }
 
-CELERY_BROKER_URL = "redis://localhost:6379"
-CELERY_RESULT_BACKEND = "redis://localhost:6379"
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE = 'UTC'
-REDIS_HOST = 'localhost'
-REDIS_PORT = '6379'
+# CELERY_BROKER_URL = "redis://localhost:6379"
+# CELERY_RESULT_BACKEND = "redis://localhost:6379"
+# CELERY_TASK_SERIALIZER = 'json'
+# CELERY_ACCEPT_CONTENT = ['json']
+# CELERY_RESULT_SERIALIZER = 'json'
+# CELERY_TIMEZONE = 'UTC'
+# REDIS_HOST = 'localhost'
+# REDIS_PORT = '6379'
 
 
 

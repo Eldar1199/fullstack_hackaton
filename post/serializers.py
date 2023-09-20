@@ -5,7 +5,7 @@ from .models import Post
 class PostListSerializer(ModelSerializer):
     class Meta:
         model = Post
-        fields = ['company_name','vacancy','experience','salary']
+        fields = 'company_name','vacancy','experience','salary'
 
 
 class PostDetailSerializer(ModelSerializer):
@@ -21,5 +21,5 @@ class PostDetailSerializer(ModelSerializer):
         return salary
     
 
-    def to_representation(self, instance):
-        repres = super().to_representation(instance)
+    # def to_representation(self, instance):
+    #     repres = super().to_representation(instance)

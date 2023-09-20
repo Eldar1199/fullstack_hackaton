@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-from .models import ProfileUser, ProfileReqruiter
+from .models import ProfileUser, ProfileRecruiter
 
 
 
@@ -12,9 +12,9 @@ class ProfileUserSerializer(ModelSerializer):
 
 
 
-class ProfileReqruiterSerializer(ModelSerializer):
+class ProfileRecruiterSerializer(ModelSerializer):
 
     class Meta:
-        model = ProfileReqruiter
+        model = ProfileRecruiter
         fields = '__all__'
         

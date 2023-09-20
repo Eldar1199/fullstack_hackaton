@@ -5,9 +5,9 @@ from .models import Post
 from .serializers import PostListSerializer, PostDetailSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from review.models import Like
+from review.models import Like, FavoriteItem
 from rest_framework.decorators import action
-from review.serializers import LikeSerializer
+from review.serializers import LikeSerializer, FavoriteCreateSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
@@ -65,7 +65,24 @@ class PostView(PermissionMixin,viewsets.ModelViewSet):
             return Response(message, status=201)
         
 
+    @action(methods=['POST'], detail=True, permission_classes=[IsAuthenticated])
+    def favorite(self, request, pk=None):
+        post = self.get_object()
+        user = request.user
+        serializer = FavoriteCreateSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            try:
+                fav_post = FavoriteItem.objects.get(post=post, author=user)
+                fav_post.delete()
+                message = 'deleted from favorites'
+            except fav_post.DoesNotExist:
+                FavoriteItem.objects.create(post=post, author=user)
+                message = 'added to favorites'
+            return Response(message, status=201)
+        
+        
 
+            
 
 
 

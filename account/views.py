@@ -1,8 +1,9 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model
-from .serializers import RegisterRecruiterSerializer, RegisterUserSerializer
+from .serializers import RegisterRecruiterSerializer, RegisterUserSerializer, ChangePasswordSerializer, ForgotPasswordSerializer, ForgotPasswordCompleteSerializer
 from drf_yasg.utils import swagger_auto_schema
+from rest_framework.permissions import IsAuthenticated
 
 User = get_user_model()
 
@@ -36,3 +37,34 @@ class ActivationUserView(APIView):
         user.save()
         return Response ('Аккаунт активирован', status =200)    
     
+
+class ChangePasswordView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        serializer = ChangePasswordSerializer(data=request.data, context={'request': request})
+        if serializer.is_valid(raise_exception=True):
+            serializer.set_new_password()
+            return Response('пароль успешно обновлен')
+
+
+
+
+
+class ForgotPasswordView(APIView):
+    def post(self, request):
+        serializer = ForgotPasswordSerializer(data = request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.send_verification_email()
+            return Response('Вам было отпавлено сообщение для восстановления')
+
+
+
+
+
+class ForgotPasswordCompleteView(APIView):
+    def post(self, request):
+        serializer = ForgotPasswordCompleteSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.set_new_password()
+            return Response('Пароль успешно изменен')

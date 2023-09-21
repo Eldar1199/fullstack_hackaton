@@ -21,7 +21,7 @@ class ProfileUser(models.Model):
 class ProfileRecruiter(models.Model):
     user = models.OneToOneField(User, 
                                 on_delete=models.CASCADE, 
-                                related_name='profiles_reqruiter', 
+                                related_name='profiles_recruiter', 
                                 primary_key=True, 
                                 verbose_name='Работодатель')
     company_name = models.TextField(blank=True, verbose_name='Компания')

@@ -1,14 +1,7 @@
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from .views import ProfileUserView, ProfileRecruiterView
-
-
-router = DefaultRouter()
-
-
-router.register('user', ProfileUserView)
-router.register('req', ProfileRecruiterView)
+from django.urls import path
+from .views import ProfileUserAPIView, ProfileRecruiterAPIView
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('user/', ProfileUserAPIView.as_view()),
+    path('req/', ProfileRecruiterAPIView.as_view()),
 ]

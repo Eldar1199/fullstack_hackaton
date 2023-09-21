@@ -21,11 +21,11 @@ class ProfileUser(models.Model):
 class ProfileRecruiter(models.Model):
     user = models.OneToOneField(User, 
                                 on_delete=models.CASCADE, 
-                                related_name='profiles_reqruiter', 
+                                related_name='profiles_recruiter', 
                                 primary_key=True, 
                                 verbose_name='Работодатель')
     company_name = models.TextField(blank=True, verbose_name='Компания')
     location = models.TextField(blank=True, verbose_name='Адрес')
-    company_phone = models.IntegerField(blank=True, verbose_name='Телефон')
-    amount_of_emplyees = models.IntegerField(blank=True, verbose_name='Количество людей')
+    company_phone = models.IntegerField(blank=True, null=True,default=0, verbose_name='Телефон')
+    amount_of_emplyees = models.IntegerField(blank=True, null=True,default=0, verbose_name='Количество людей')
     about_company = models.TextField(blank=True, verbose_name='О компании')

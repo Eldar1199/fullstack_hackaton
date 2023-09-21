@@ -22,7 +22,7 @@ class ProfileUserAPIView(generics.GenericAPIView):
         return ProfileUser.objects.get(user=self.request.user)
 
 
-class ProfileReqruiterAPIView(generics.GenericAPIView):
+class ProfileRecruiterAPIView(generics.GenericAPIView):
     permission_classes = [IsAuthenticated]
     def get(self, request):
         profile = self.get_object()

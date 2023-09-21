@@ -30,7 +30,7 @@ DEBUG = config('DEBUG')
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
-AUTH_USER_MODEL = 'account.User'
+AUTH_USER_MODEL = 'account.CustomUser'
 
 
 

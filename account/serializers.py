@@ -1,8 +1,8 @@
 from rest_framework import serializers
 from .models import CustomUser
-from profilee.models import ProfileUser
+# from profilee.models import ProfileUser
 from django.contrib.auth import get_user_model
-from .utils import send_activation_code_to_user
+from .utils import send_activation_code
 from django.core.mail import send_mail
 # from .tasks import send_activation_code_celery
 
@@ -27,11 +27,14 @@ class RegisterUserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
-        ProfileUser.objects.create(user=user)
-        send_activation_code_to_user(user.email, user.activation_code)
+        # ProfileUser.objects.create(user=user)
+        send_activation_code(user.email, user.activation_code)
         # send_activation_code_celery.delay(user.email, user.activation_code)
         return user
     
+
+
+
 
 class ChangePasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField(min_length=4, required=True)
@@ -75,6 +78,7 @@ class ForgotPasswordSerializer(serializers.Serializer):
         email = self.validated_data.get('email')
         user = User.objects.get(email=email)
         user.create_activation_code()
+        user.save()
         send_mail(
             'Восстановление пароля',
             f'Ваш код восстановления: {user.activation_code}',
@@ -108,3 +112,6 @@ class ForgotPasswordCompleteSerializer(serializers.Serializer):
         user.set_password(password)
         user.activation_code = ''
         user.save()
+
+
+'=============================================  последняя фиксация ============================================='

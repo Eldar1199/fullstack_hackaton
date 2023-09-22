@@ -46,3 +46,7 @@ class CustomUser(AbstractUser):
         code = get_random_string(length=10, allowed_chars='0123456789')
         self.activation_code = code
 
+
+
+
+'=============================================  последняя фиксация ============================================='

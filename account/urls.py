@@ -3,19 +3,15 @@ from.views import RegisterUserView, ActivationUserView, ActivationRecruiterView,
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
-    path('rec-reg/', RegisterUserView.as_view(), name='recruiter_register'),
-    path('rec-act/<str:email>/<str:activation_code>', ActivationRecruiterView.as_view(), name='recruiter_activation'),
-    path('rec-log/', TokenObtainPairView.as_view(), name='recruiter_token_obtain_pair'),
-    path('rec-ref/', TokenRefreshView.as_view(), name='recruiter_token_refresh'),
-
-
-    path('user-reg/', RegisterUserView.as_view(), name='user_register'),
+    path('register/', RegisterUserView.as_view(), name='registration'),
+    path('rec-act/<str:email>/<str:activation_code>', ActivationRecruiterView.as_view(), name='user_activation'),
     path('user-act/<str:email>/<str:activation_code>', ActivationUserView.as_view(), name='user_activation'),
-    path('user-log/', TokenObtainPairView.as_view(), name='user_token_obtain_pair'),
-    path('user-ref/', TokenRefreshView.as_view(), name='user_token_refresh'),
+    path('log/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('ref/', TokenRefreshView.as_view(), name='token_refresh'),
 
     path('change-pass/', ChangePasswordView.as_view()),
     path('forgot-pass/', ForgotPasswordView.as_view()),
     path('forgot-pass-compl/', ForgotPasswordCompleteView.as_view()),
 
 ]
+'=============================================  последняя фиксация ============================================='

@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from .serializers import RegisterUserSerializer, ChangePasswordSerializer, ForgotPasswordSerializer, ForgotPasswordCompleteSerializer
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.permissions import IsAuthenticated
+from profilee.models import ProfileUser, ProfileRecruiter
 
 User = get_user_model()
 
@@ -27,6 +28,7 @@ class ActivationRecruiterView(APIView):
         user.activation_code = ''
         user.is_active = True
         user.is_staff = True
+        ProfileRecruiter.objects.create(user=user)  #=================================== фиксация
         user.save()
         return Response ('Аккаунт активирован', status =200)    
     
@@ -39,6 +41,7 @@ class ActivationUserView(APIView):
             return Response('Пользователь не найден', status=400)
         user.activation_code = ''
         user.is_active = True
+        ProfileUser.objects.create(user=user) #=================================== фиксация
         user.save()
         return Response ('Аккаунт активирован', status =200) 
 

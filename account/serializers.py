@@ -26,13 +26,12 @@ class RegisterUserSerializer(serializers.ModelSerializer):
 
 
     def create(self, validated_data):
+
         user = User.objects.create_user(**validated_data)
         # ProfileUser.objects.create(user=user)
         send_activation_code(user.email, user.activation_code)
         # send_activation_code_celery.delay(user.email, user.activation_code)
         return user
-    
-
 
 
 

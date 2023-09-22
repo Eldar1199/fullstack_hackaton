@@ -13,5 +13,7 @@ urlpatterns = [
     path('forgot-pass/', ForgotPasswordView.as_view()),
     path('forgot-pass-compl/', ForgotPasswordCompleteView.as_view()),
 
+
 ]
 '=============================================  последняя фиксация ============================================='
+

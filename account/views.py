@@ -6,6 +6,7 @@ from drf_yasg.utils import swagger_auto_schema
 from rest_framework.permissions import IsAuthenticated
 from profilee.models import ProfileUser, ProfileRecruiter
 
+
 User = get_user_model()
 
 
@@ -32,6 +33,7 @@ class ActivationRecruiterView(APIView):
         user.save()
         return Response ('Аккаунт активирован', status =200)    
     
+
 
 
 class ActivationUserView(APIView):
@@ -80,4 +82,5 @@ class ForgotPasswordCompleteView(APIView):
         if serializer.is_valid(raise_exception=True):
             serializer.set_new_password()
             return Response('Пароль успешно изменен')
+
 

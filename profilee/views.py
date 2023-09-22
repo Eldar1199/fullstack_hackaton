@@ -38,4 +38,4 @@ class ProfileRecruiterAPIView(generics.GenericAPIView):
     
     def get_object(self):
         return ProfileRecruiter.objects.get(user=self.request.user)
-    
+

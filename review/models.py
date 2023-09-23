@@ -23,7 +23,7 @@ class Comment(models.Model):
     
 
 class Rating(models.Model):
-    rating = models.PositiveSmallIntegerField()
+    rating = models.PositiveSmallIntegerField(default=0)
     post = models.ForeignKey(Post,on_delete=models.CASCADE,related_name='ratings')
     author = models.ForeignKey(User,on_delete=models.CASCADE,related_name='ratings')
 

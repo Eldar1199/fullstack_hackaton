@@ -1,10 +1,10 @@
 from django.urls import path, include
-from .views import CommentView, RatingView, FavoriteDeleteView, FavoriteListView
+from .views import CommentView, FavoriteDeleteView, FavoriteListView
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 router.register('comments', CommentView)
-router.register('rating', RatingView)
+# router.register('rating', RatingView)
 
 
 urlpatterns = [

@@ -5,9 +5,9 @@ from .models import Post
 from .serializers import PostListSerializer, PostDetailSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from review.models import Like, FavoriteItem
+from review.models import Like, FavoriteItem, Rating
 from rest_framework.decorators import action
-from review.serializers import LikeSerializer, FavoriteCreateSerializer
+from review.serializers import LikeSerializer, FavoriteCreateSerializer, RatingSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
@@ -85,9 +85,43 @@ class PostView(PermissionMixin,viewsets.ModelViewSet):
         return serializer.save(author=self.request.user)
     
 
+    @action(methods=['POST'], detail=True, permission_classes=[IsAuthenticated])
+    def apply(self, request, pk=None):
+        post = self.get_object()
+        user_email = request.user.email
+        resume = ProfileUser.objects.filter(user=request.user).first()
+        user_resume = resume.user_resume.path 
+        recruiter_email = post.author.email
+        if post.actuality == True:
+            try:
+                subject = 'Отклик на ваканцию'
+                message = f'Пользователь ITJOB: {user_email} отправил вам свое резюме'
+                from_email = user_email
+                recipient_list = [recruiter_email]
+
+                email = EmailMessage(subject, message, from_email, recipient_list)
+                email.attach_file(user_resume)
+                email.send()
+
+                return Response('Успешно отправлено', status=200)
+            except Exception as e:
+                return Response('Произошла ошибка при отправке электронной почты', status=500)
+        else:
+            return Response('ваканция не актуальна')
 
 
 
+    @action(methods=['POST'], detail=True, permission_classes=[IsAuthenticated])
+    def rating(self, request, pk=None):
+        post = self.get_object()
+        user = request.user
+        serializer = RatingSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            Rating.objects.create(post=post, author=user)
+            return Response('Спасибо за рейтинг', status=201)
+
+    # def perform_create(self, serializer):
+    #     return serializer.save(post=self.get_object())
 
 
 

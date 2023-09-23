@@ -35,15 +35,22 @@ class RatingSerializer(ModelSerializer):
             return rating
         raise ValidationError('Рейтинг должен быть от 1 до 5')
     
-    def validate_post(self,post):
-        user = self.context.get('request').user
-        if self.Meta.model.objects.filter(post=post,author=user).exists():
-            raise ValidationError('Вы уже оставляли рейтинг')
-        return post
+    # def validate_post(self,post):
+    #     user = self.context.get('request').user
+    #     if self.Meta.model.objects.filter(post=post,author=user).exists():
+    #         raise ValidationError('Вы уже оставляли рейтинг')
+    #     return post
     
-    def create(self, validated_data):
-        user = self.context.get('request').user
-        return self.Meta.model.objects.create(author=user, **validated_data)
+    # def validate_post_author(self,author):
+    #     # user = self.context.get('request').user
+    #     if author == self.context.get('request').post.author:
+    #         raise ValidationError('Автор не может поставить рейтинг на свой пост')
+    #     return author
+
+    
+    # def create(self, validated_data):
+    #     user = self.context.get('request').user
+    #     return self.Meta.model.objects.create(author=user, **validated_data)
 
 
 

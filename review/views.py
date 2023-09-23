@@ -28,9 +28,9 @@ class CommentView(PermissionMixin,ModelViewSet):
     serializer_class = CommentSerializer
 
 
-class RatingView(PermissionMixin, ModelViewSet):
-    queryset = Rating.objects.all()
-    serializer_class = RatingSerializer
+# class RatingView(PermissionMixin, ModelViewSet):
+#     queryset = Rating.objects.all()
+#     serializer_class = RatingSerializer
 
 
 class FavoriteListView(ListAPIView):

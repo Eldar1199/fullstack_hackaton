@@ -7,8 +7,8 @@ from review.serializers import CommentSerializer
 class PostListSerializer(ModelSerializer):
     class Meta:
         model = Post
-
         fields = ['company_name','vacancy','experience','salary', 'pk']
+        extra_kwargs = {'user': {'required': False}}
 
 
 
@@ -16,12 +16,12 @@ class PostDetailSerializer(ModelSerializer):
     class Meta:
         model = Post
         fields = '__all__'
+        extra_kwargs = {'user': {'required': False}}
+
 
     def validate_salary(self, salary):
         if salary <= 0:
-            raise ValidationError(
-                'Price not be 0 or little'
-            )
+            raise ValidationError('Price not be 0 or little')
         return salary
 
 

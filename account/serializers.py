@@ -1,13 +1,35 @@
 from rest_framework import serializers
 from .models import CustomUser
-# from profilee.models import ProfileUser
 from django.contrib.auth import get_user_model
-from .utils import send_activation_code
+from .utils import send_activation_code_to_recruiter, send_activation_code_to_user
 from django.core.mail import send_mail
 # from .tasks import send_activation_code_celery
 
 User = get_user_model()
 
+
+class RegisterRecruiterSerializer(serializers.ModelSerializer):
+    password_confirm = serializers.CharField(min_length=4, required=True)
+
+    class Meta:
+        model  = CustomUser
+        fields = ('email', 'password', 'password_confirm',)
+
+
+    def validate(self, attrs):
+        password = attrs.get('password')
+        password_confirm = attrs.pop ('password_confirm')
+        if password != password_confirm:
+            raise serializers.ValidationError ('Пароли не совпадают')
+        return attrs
+
+
+    def create(self, validated_data):
+        user = User.objects.create_user(**validated_data)
+        send_activation_code_to_recruiter(user.email, user.activation_code)
+        # send_activation_code_celery.delay(user.email, user.activation_code)
+        return user
+    
 
 class RegisterUserSerializer(serializers.ModelSerializer):
     password_confirm = serializers.CharField(min_length=4, required=True)
@@ -28,12 +50,9 @@ class RegisterUserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
 
         user = User.objects.create_user(**validated_data)
-        # ProfileUser.objects.create(user=user)
-        send_activation_code(user.email, user.activation_code)
+        send_activation_code_to_user(user.email, user.activation_code)
         # send_activation_code_celery.delay(user.email, user.activation_code)
         return user
-
-
 
 class ChangePasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField(min_length=4, required=True)
@@ -111,6 +130,7 @@ class ForgotPasswordCompleteSerializer(serializers.Serializer):
         user.set_password(password)
         user.activation_code = ''
         user.save()
+        
 
 
 '=============================================  последняя фиксация ============================================='

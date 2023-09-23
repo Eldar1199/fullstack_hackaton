@@ -40,17 +40,7 @@ class FavoriteListView(ListAPIView):
 
 
     def get_queryset(self):
-        print(self.request.user.favorites.all())
         return self.request.user.favorites.all()
-    
-class FavoriteCreateView(CreateAPIView):
-    serializer_class = FavoriteCreateSerializer
-    permission_classes = [IsAuthenticated,]
-    authentication_classes = [JWTAuthentication]
-
-
-    def perform_create(self,serializer):
-        serializer.save(author=self.request.user)
 
 
 class FavoriteDeleteView(DestroyAPIView):
@@ -66,3 +56,26 @@ class FavoriteDeleteView(DestroyAPIView):
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# class FavoriteCreateView(CreateAPIView):
+#     serializer_class = FavoriteCreateSerializer
+#     permission_classes = [IsAuthenticated,]
+#     authentication_classes = [JWTAuthentication]
+
+
+#     def perform_create(self,serializer):
+#         serializer.save(author=self.request.user)

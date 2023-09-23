@@ -11,6 +11,8 @@ from review.serializers import LikeSerializer, FavoriteCreateSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
+from django.core.mail import EmailMessage
+from profilee.models import ProfileUser
 
 
 class PermissionMixin:
@@ -37,7 +39,6 @@ class PostView(PermissionMixin,viewsets.ModelViewSet):
         post = get_object_or_404(Post, pk=pk)
         post.views += 1
         post.save()
-        
         serializer = self.get_serializer_class()(post)
         return Response(serializer.data, status=200)
 
@@ -75,12 +76,48 @@ class PostView(PermissionMixin,viewsets.ModelViewSet):
                 fav_post = FavoriteItem.objects.get(post=post, author=user)
                 fav_post.delete()
                 message = 'deleted from favorites'
-            except fav_post.DoesNotExist:
-                FavoriteItem.objects.create(post=post, author=user)
+            except FavoriteItem.DoesNotExist:
+                FavoriteItem.objects.create(post=post, author=self.request.user)
                 message = 'added to favorites'
             return Response(message, status=201)
-        
-        
+    
+    def perform_create(self, serializer):
+        return serializer.save(author=self.request.user)
+    
+
+    @action(methods=['POST'], detail=True, permission_classes=[IsAuthenticated])
+    def apply(self, request, pk=None):
+        post = self.get_object()
+        user_email = request.user.email
+        resume = ProfileUser.objects.filter(user=request.user).first()
+        user_resume = resume.user_resume.path 
+        recruiter_email = post.author.email
+        if post.actuality == True:
+            try:
+                subject = 'Отклик на ваканцию'
+                message = f'Пользователь ITJOB: {user_email} отправил вам свое резюме'
+                from_email = user_email
+                recipient_list = [recruiter_email]
+
+                email = EmailMessage(subject, message, from_email, recipient_list)
+                email.attach_file(user_resume)
+                email.send()
+
+                return Response('Успешно отправлено', status=200)
+            except Exception as e:
+                return Response('Произошла ошибка при отправке электронной почты', status=500)
+        else:
+            return Response('ваканция не актуальна')
+
+
+
+
+
+
+
+
+
+
 
             
 

@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model
-from .serializers import RegisterUserSerializer, ChangePasswordSerializer, ForgotPasswordSerializer, ForgotPasswordCompleteSerializer
+from .serializers import RegisterRecruiterSerializer,RegisterUserSerializer, ChangePasswordSerializer, ForgotPasswordSerializer, ForgotPasswordCompleteSerializer
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.permissions import IsAuthenticated
 from profilee.models import ProfileUser, ProfileRecruiter
@@ -10,6 +10,15 @@ from profilee.models import ProfileUser, ProfileRecruiter
 User = get_user_model()
 
 
+class RegisterRecruiterView(APIView):
+    @swagger_auto_schema(request_body=RegisterRecruiterSerializer()) #для отображения параметров post запроса
+    def post(self, request):
+        data = request.data
+        serializer = RegisterRecruiterSerializer(data=data)
+        if serializer.is_valid(raise_exception = True):
+            serializer.save()           
+        return Response('Вы успешно зарегистрировались', status=201)
+    
 class RegisterUserView(APIView):
     @swagger_auto_schema(request_body=RegisterUserSerializer()) #для отображения параметров post запроса
     def post(self, request):
@@ -18,8 +27,6 @@ class RegisterUserView(APIView):
         if serializer.is_valid(raise_exception = True):
             serializer.save()           
         return Response('Вы успешно зарегистрировались', status=201)
-    
-
 
 class ActivationRecruiterView(APIView):
     def get(self, request, email, activation_code):

@@ -18,17 +18,15 @@ class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return f'{self.author.username} {self.post.title}'
+
     
 
 class Rating(models.Model):
-    rating = models.PositiveSmallIntegerField(default=0)
+    rating = models.PositiveSmallIntegerField(default=1,blank=False)
     post = models.ForeignKey(Post,on_delete=models.CASCADE,related_name='ratings')
     author = models.ForeignKey(User,on_delete=models.CASCADE,related_name='ratings')
 
-    def __str__(self):
-        return f'{self.author} {self.rating}'
+
     
 
 

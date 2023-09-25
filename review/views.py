@@ -8,31 +8,6 @@ from .permissions import IsAuthor
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
-
-class PermissionMixin:
-    def get_permissions(self):
-        if self.action == 'create':
-            permissions = [IsAuthenticated]
-        elif self.action in ('update', 'partial_update', 'destroy'):
-            permissions = [IsAuthor]
-        else:
-            permissions = [AllowAny]
-        return [permission() for permission in permissions]
-
-
-    
-
-
-class CommentView(PermissionMixin,ModelViewSet):
-    queryset = Comment.objects.all()
-    serializer_class = CommentSerializer
-
-
-# class RatingView(PermissionMixin, ModelViewSet):
-#     queryset = Rating.objects.all()
-#     serializer_class = RatingSerializer
-
-
 class FavoriteListView(ListAPIView):
     serializer_class= FavoriteListSerializer
     permission_classes = [IsAuthenticated, ]

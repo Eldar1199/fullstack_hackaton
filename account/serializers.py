@@ -1,9 +1,9 @@
 from rest_framework import serializers
 from .models import CustomUser
 from django.contrib.auth import get_user_model
-from .utils import send_activation_code_to_recruiter, send_activation_code_to_user
 from django.core.mail import send_mail
-# from .tasks import send_activation_code_celery
+from .tasks import send_activation_code_celery_to_recruiter,send_activation_code_celery_to_user
+# from .utils import send_activation_code_to_recruiter, send_activation_code_to_user
 
 User = get_user_model()
 
@@ -26,8 +26,8 @@ class RegisterRecruiterSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
-        send_activation_code_to_recruiter(user.email, user.activation_code)
-        # send_activation_code_celery.delay(user.email, user.activation_code)
+        # send_activation_code_to_recruiter(user.email, user.activation_code)
+        send_activation_code_celery_to_recruiter.delay(user.email, user.activation_code)
         return user
     
 
@@ -50,8 +50,8 @@ class RegisterUserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
 
         user = User.objects.create_user(**validated_data)
-        send_activation_code_to_user(user.email, user.activation_code)
-        # send_activation_code_celery.delay(user.email, user.activation_code)
+        # send_activation_code_to_user(user.email, user.activation_code)
+        send_activation_code_celery_to_user.delay(user.email, user.activation_code)
         return user
 
 class ChangePasswordSerializer(serializers.Serializer):

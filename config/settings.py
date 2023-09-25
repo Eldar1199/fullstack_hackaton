@@ -190,14 +190,14 @@ SWAGGER_SETTINGS = {
     }
 }
 
-# CELERY_BROKER_URL = "redis://localhost:6379"
-# CELERY_RESULT_BACKEND = "redis://localhost:6379"
-# CELERY_TASK_SERIALIZER = 'json'
-# CELERY_ACCEPT_CONTENT = ['json']
-# CELERY_RESULT_SERIALIZER = 'json'
-# CELERY_TIMEZONE = 'UTC'
-# REDIS_HOST = 'localhost'
-# REDIS_PORT = '6379'
+CELERY_BROKER_URL = "redis://localhost:6379"
+CELERY_RESULT_BACKEND = "redis://localhost:6379"
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'UTC'
+REDIS_HOST = 'localhost'
+REDIS_PORT = '6379'
 
 
 
@@ -249,6 +249,5 @@ LOGGING = {
 CORS_ALLOWED_ORIGINS = ['http://127.0.0.1:8000', 'http://127.0.0.1:3000', 'https://domain.com']
 
 CORS_ALLOWED_METHODS = ['POST', 'GET', 'PUT', 'PATCH', 'DELETE']
- 
 
 

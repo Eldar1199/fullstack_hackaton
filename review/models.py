@@ -7,32 +7,30 @@ User = get_user_model()
 
 
 class Like(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='likes')
-    post = models.ForeignKey( Post, on_delete=models. CASCADE, related_name='likes')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='likes',verbose_name='автор')
+    post = models.ForeignKey( Post, on_delete=models. CASCADE, related_name='likes',verbose_name='пост')
     
     
 
 class Comment(models.Model):
     body = models.TextField(verbose_name='Содержимое комментария')
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')
-    created_at = models.DateTimeField(auto_now_add=True)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments',verbose_name='пост')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments',verbose_name='автор')
+    created_at = models.DateTimeField(auto_now_add=True,verbose_name='дата создания')
 
 
     
 
 class Rating(models.Model):
-    rating = models.PositiveSmallIntegerField(default=1,blank=False)
-    post = models.ForeignKey(Post,on_delete=models.CASCADE,related_name='ratings')
-    author = models.ForeignKey(User,on_delete=models.CASCADE,related_name='ratings')
+    rating = models.PositiveSmallIntegerField(default=1,blank=False,verbose_name='рейтинг')
+    post = models.ForeignKey(Post,on_delete=models.CASCADE,related_name='ratings',verbose_name='пост')
+    author = models.ForeignKey(User,on_delete=models.CASCADE,related_name='ratings',verbose_name='автор')
 
-
-    
 
 
 class FavoriteItem(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='favorites')
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='favorites')
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='favorites',verbose_name='пост')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='favorites',verbose_name='автор')
 
 
     class Meta:
@@ -46,12 +44,6 @@ class FavoriteItem(models.Model):
     
     
 
-# class UserFavorite(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='favorites')
-#     favorite_item = models.ForeignKey(FavoriteItem, on_delete=models.CASCADE)
-
-#     def __str__(self):
-#         return f'{self.user.username} {self.favorite_item}'
 
     
 

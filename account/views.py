@@ -11,7 +11,7 @@ User = get_user_model()
 
 
 class RegisterRecruiterView(APIView):
-    @swagger_auto_schema(request_body=RegisterRecruiterSerializer()) #для отображения параметров post запроса
+    @swagger_auto_schema(request_body=RegisterRecruiterSerializer()) 
     def post(self, request):
         data = request.data
         serializer = RegisterRecruiterSerializer(data=data)
@@ -20,7 +20,7 @@ class RegisterRecruiterView(APIView):
         return Response('Вы успешно зарегистрировались', status=201)
     
 class RegisterUserView(APIView):
-    @swagger_auto_schema(request_body=RegisterUserSerializer()) #для отображения параметров post запроса
+    @swagger_auto_schema(request_body=RegisterUserSerializer()) 
     def post(self, request):
         data = request.data
         serializer = RegisterUserSerializer(data=data)

@@ -130,3 +130,6 @@ class ForgotPasswordCompleteSerializer(serializers.Serializer):
         user.activation_code = ''
         user.save()
         
+
+
+'=============================================  последняя фиксация ============================================='

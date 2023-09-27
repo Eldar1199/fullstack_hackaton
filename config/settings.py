@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #libs
     'rest_framework',
+    'rest_framework.authtoken',
     'drf_yasg',
     'rest_framework_simplejwt',
     'django_filters',
@@ -162,12 +163,13 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework_simplejwt.authentication.JWTAuthentication',),
+    'rest_framework.authentication.TokenAuthentication'
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 10
+    
+    
 }
 
 
@@ -190,14 +192,14 @@ SWAGGER_SETTINGS = {
     }
 }
 
-# CELERY_BROKER_URL = "redis://localhost:6379"
-# CELERY_RESULT_BACKEND = "redis://localhost:6379"
-# CELERY_TASK_SERIALIZER = 'json'
-# CELERY_ACCEPT_CONTENT = ['json']
-# CELERY_RESULT_SERIALIZER = 'json'
-# CELERY_TIMEZONE = 'UTC'
-# REDIS_HOST = 'localhost'
-# REDIS_PORT = '6379'
+CELERY_BROKER_URL = "redis://localhost:6379"
+CELERY_RESULT_BACKEND = "redis://localhost:6379"
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'UTC'
+REDIS_HOST = 'localhost'
+REDIS_PORT = '6379'
 
 
 

@@ -1,4 +1,4 @@
-from rest_framework import viewsets, mixins, generics
+from rest_framework import viewsets, mixins, generics, views
 from rest_framework.response import Response
 from .models import ProfileRecruiter, ProfileUser
 from .serializers import ProfileRecruiterSerializer, ProfileUserSerializer
@@ -38,4 +38,4 @@ class ProfileRecruiterAPIView(generics.GenericAPIView):
     
     def get_object(self):
         return ProfileRecruiter.objects.get(user=self.request.user)
-
+    

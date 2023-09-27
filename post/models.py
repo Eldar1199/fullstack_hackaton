@@ -6,6 +6,7 @@ User = get_user_model()
 
 
 class Post(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='post', verbose_name='автор')
     company_name = models.CharField(max_length=30, blank=False)
     vacancy = models.CharField(max_length=30, blank=False)
     experience = models.PositiveIntegerField(blank=False)

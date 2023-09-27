@@ -79,10 +79,3 @@ class PostView(PermissionMixin,viewsets.ModelViewSet):
                 FavoriteItem.objects.create(post=post, author=user)
                 message = 'added to favorites'
             return Response(message, status=201)
-        
-        
-
-            
-
-
-

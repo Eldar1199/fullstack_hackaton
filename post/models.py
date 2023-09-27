@@ -27,7 +27,7 @@ class Job_type(models.Model):
         super().save()
 
 class Post(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='post', verbose_name='автор', editable=False,verbose_name='автор')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='post', verbose_name='автор', editable=False)
     company_name = models.CharField(max_length=30, blank=False,verbose_name='имя компании ')
     level = models.ForeignKey(Job_level,on_delete=models.SET_NULL,null=True,related_name='level', verbose_name='Уровень разработчика')
     job_type = models.ForeignKey(Job_type, on_delete=models.SET_NULL,null=True,related_name='type', verbose_name='Тип направления')

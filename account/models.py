@@ -1,4 +1,3 @@
-from typing import Any
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractUser
 from django.utils.crypto import get_random_string
@@ -34,14 +33,12 @@ class CustomUser(AbstractUser):
     activation_code = models.CharField(max_length=10, blank=True)
     username = None
 
-
-    objects =UserManager()
+    objects = UserManager()
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
     
 
-    
     def create_activation_code(self):
         code = get_random_string(length=10, allowed_chars='0123456789')
         self.activation_code = code
